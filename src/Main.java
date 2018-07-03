@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 class Node {
     String name;
@@ -12,6 +13,10 @@ class Node {
 
     public void addEdge (Edge edge) {
         edges.add(edge);
+    }
+
+    public String getName (){
+        return name;
     }
 }
 
@@ -37,10 +42,23 @@ class Graph {
     public List<Edge> getGraph(){
         return graph;
     }
+
+    public void insertEdge (Edge edge){
+        graph.add(edge);
+    }
+
+    public int findRoute(String src, String dst){
+        for(int i = 0; i < graph.size(); i++){
+            String source = graph.get(i).source.getName();
+            String dest = graph.get(i).destination.getName();
+            if(source.equals(src) && dest.equals(dst)){
+                return graph.get(i).weight;
+            }
+        }
+
+        return 0;
+    }
 }
-
-
-
 
 
 public class Main {
@@ -82,6 +100,37 @@ public class Main {
         florida.addEdge(fl2in);
         florida.addEdge(fl2ny);
 
-        System.out.print("Edge : " + graph.getGraph().get(0));
+        graph.insertEdge(ws2in);
+        graph.insertEdge(ws2cl);
+        graph.insertEdge(in2ws);
+        graph.insertEdge(in2ny);
+        graph.insertEdge(in2fl);
+        graph.insertEdge(ny2in);
+        graph.insertEdge(ny2fl);
+        graph.insertEdge(cl2ws);
+        graph.insertEdge(cl2fl);
+        graph.insertEdge(fl2cl);
+        graph.insertEdge(fl2in);
+        graph.insertEdge(fl2ny);
+
+        List<Edge> edges = graph.getGraph();
+        for (int i = 0; i < edges.size(); i++){
+            System.out.println("Route " + (i+1) + ": " + edges.get(i).source.getName() + " to " +
+            edges.get(i).destination.getName());
+        }
+
+        System.out.println("");
+        System.out.println("<--------------------------->");
+        System.out.println("");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Which route do you need to know?");
+        System.out.println("Source: ");
+        String source = scanner.nextLine();
+        System.out.println("Destination: ");
+        String destination = scanner.nextLine();
+        System.out.println("<--------------------------->");
+
+        int value = graph.findRoute(source, destination);
+        System.out.println("Route cost: " + value);
     }
 }
