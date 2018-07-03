@@ -58,6 +58,16 @@ class Graph {
 
         return 0;
     }
+
+    public void changeRoute(String src, String dst, int value){
+        for(int i = 0; i < graph.size(); i++){
+            String source = graph.get(i).source.getName();
+            String dest = graph.get(i).destination.getName();
+            if(source.equals(src) && dest.equals(dst)){
+                graph.get(i).weight = value;
+            }
+        }
+    }
 }
 
 
@@ -132,5 +142,21 @@ public class Main {
 
         int value = graph.findRoute(source, destination);
         System.out.println("Route cost: " + value);
+
+
+        System.out.println("");
+        System.out.println("<--------------------------->");
+        System.out.println("");
+        System.out.println("Which route do you need to change?");
+        System.out.println("Source: ");
+        source = scanner.nextLine();
+        System.out.println("Destination: ");
+        destination = scanner.nextLine();
+        System.out.println("Which is the new value?");
+        System.out.println("<--------------------------->");
+
+        value = scanner.nextInt();
+        graph.changeRoute(source, destination, value);
+        System.out.println("Route changed!");
     }
 }
